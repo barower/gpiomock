@@ -58,12 +58,12 @@ def _verify(function):
         pin = int(pin)
         if pin not in _open:
             ppath = gpiopath(pin)
-            if not os.path.exists(ppath):
+            try:
+                value = open(pjoin(ppath, 'value'), FMODE)
+            except IOError:
                 log.debug("Creating Pin {0}".format(pin))
-                with _export_lock:
-                    with open(pjoin(gpio_root, 'export'), 'w') as f:
-                        _write(f, pin)
-            value = open(pjoin(ppath, 'value'), FMODE)
+                os.makedirs(ppath)
+                value = open(pjoin(ppath, 'value'), FMODE)
             direction = open(pjoin(ppath, 'direction'), FMODE)
             _open[pin] = PinState(value=value, direction=direction)
         return function(pin, *args, **kwargs)
