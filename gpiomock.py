@@ -33,7 +33,7 @@ _export_lock = threading.Lock()
 _pyset = set
 
 _open = dict()
-FMODE = 'w+'
+FMODE = 'w'
 
 IN, OUT = 'in', 'out'
 LOW, HIGH = 'low', 'high'
@@ -41,6 +41,8 @@ LOW, HIGH = 'low', 'high'
 
 def _write(f, v):
     log.debug("writing: {0}: {1}".format(f, v))
+    f.seek(0)
+    f.truncate()
     f.write(str(v))
     f.flush()
 
@@ -130,28 +132,30 @@ def setup(pin, mode, pullup=None, initial=False):
             set(pin, 0)
 
 
-@_verify
 def mode(pin):
     '''get the pin mode
 
     Returns:
         str: "in" or "out"
     '''
-    f = _open[pin].direction
-    return _read(f)
+    pin = int(pin)
+    ppath = gpiopath(pin)
+    with open(pjoin(ppath, 'direction'), 'r') as f:
+        f.seek(0)
+        return f.read().strip()
 
 
-@_verify
 def read(pin):
     '''read the pin value
 
     Returns:
         bool: 0 or 1
     '''
-    f = _open[pin].value
-    out = int(_read(f))
-    log.debug("Read {0}: {1}".format(pin, out))
-    return out
+    pin = int(pin)
+    ppath = gpiopath(pin)
+    with open(pjoin(ppath, 'value'), 'r') as f:
+        f.seek(0)
+        return int(f.read().strip())
 
 
 @_verify
@@ -165,7 +169,6 @@ def set(pin, value):
     _write(f, value)
 
 
-@_verify
 def input(pin):
     '''read the pin. Same as read'''
     return read(pin)
@@ -188,3 +191,4 @@ def setmode(value):
 
 
 BCM = None  # rpio compatibility
+
