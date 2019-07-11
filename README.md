@@ -1,11 +1,12 @@
-# Linux [sysfs](https://www.kernel.org/doc/Documentation/gpio/sysfs.txt) gpio access
+# Linux [sysfs](https://www.kernel.org/doc/Documentation/gpio/sysfs.txt) mock gpio access
 
-This library provides gpio access via the standard linux [sysfs interface](https://www.kernel.org/doc/Documentation/gpio/sysfs.txt)
+This library emulates gpio access to the standard linux [sysfs interface](https://www.kernel.org/doc/Documentation/gpio/sysfs.txt)
 
-It is intended to mimick [RPIO](http://pythonhosted.org/RPIO/) as much as possible 
-for all features, while also supporting additional (and better named) functionality 
-to the same methods.
+It is a mock replacement to [gpio](https://github.com/vitiral/gpio) module. Useful when developing embedded software on local machine.
 
+## Usage
+
+```import gpiomock as gpio```
 
 ## Supported Features
 - get pin values with `read(pin)` or `input(pin)`

@@ -3,18 +3,17 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from gpio import __version__
-
+from gpiomock import __version__
 
 with open("README.md") as f:
     ldesc = f.read()
 
 config = {
-    'name': 'gpio',
-    'author': 'Garrett Berg',
-    'author_email': 'garrett@cloudformdesign.com',
+    'name': 'gpiomock',
+    'author': 'Bartlomiej Osinski',
+    'author_email': 'osinskibartlomiej@gmail.com',
     'version': __version__,
-    'py_modules': ['gpio'],
+    'py_modules': ['gpiomock'],
     'license': 'MIT',
     'install_requires': [
     ],

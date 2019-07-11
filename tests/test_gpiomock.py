@@ -14,7 +14,7 @@ except ImportError:
 import sys
 import os
 pjoin = os.path.join
-import gpio
+import gpiomock as gpio
 
 
 if sys.version_info.major < 3:
