@@ -26,7 +26,7 @@ class PinState(object):
 path = os.path
 pjoin = os.path.join
 
-gpio_root = '/sys/class/gpio'
+gpio_root = '/tmp/sys/class/gpio'
 gpiopath = lambda pin: os.path.join(gpio_root, 'gpio{0}'.format(pin))
 _export_lock = threading.Lock()
 
